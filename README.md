@@ -93,7 +93,7 @@ netstat -lantp
 Then log in to neo4j via the web interface http://localhost:7474/browser/
 Initially both the username and password are neo4j, you must change the password (for example into BloodHound as long as you don't expose the database to the outside world)
 
-[picture neo4j here]
+![neo4j via browser](https://github.com/duncandw/Install_BloodHound_on_Ubuntu/blob/master/neo4j_screen.png)
 
 The last step is to install the BloodHound binary application itself
 
@@ -107,6 +107,11 @@ Finally, you are able to launch the BloodHound application by selecting the dire
 
 Then in the logon screen enter the database url bolt://localhost:7687, the username neo4j and the password (BloodHound).
 
-[picture BloodHound here]
+![BloodHound logon](https://github.com/duncandw/Install_BloodHound_on_Ubuntu/blob/master/BloodHound_Logon.png)
 
 Depending on your computer memory configuration you might want to make some additional adjustments in the /etc/neo4j/neo4j.conf file. Also take a look at the logfiles /var/lib/neo4j/neo4j.log and debug.log as these will likely give you additional hints on how to optimize the configuration.
+
+### Using BloodHound in the field
+
+When using BloodHound in the field, you will experience that it is slow, very slow. I initially had 8GB of RAM in my notebook, I bought a 16GB extension so now have 24GB in total but still not performing very well. Interestingly enough when running the Cypher queries directly in the neo4j browser it performs quite well, but then it of course is tough to actually understand the result of the graph.
+One thing that I didn't fix yet is to extend the 'maximum open files', that might still help to improve performance. But I'm happy anyway that it actually works now :+1:.
