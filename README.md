@@ -1,8 +1,11 @@
 # Install BloodHound on Ubuntu
 Below is my experience of installing BloodHound on Ubuntu 18.04 Linux.
 
-For the context, my system is a notebook with both Windows 10 and Ubuntu 18.04 installed. I installed both Operating Systems in a dual-boot configuration because I want to prevent any performance trade-offs due to hypervisors etc. 
-*I initially tried with Ubuntu 19.10 but I failed to get that working so I re-tried with 18.04.*
+For the context, my system is a notebook with both Windows 10 and Ubuntu 18.04 installed. I installed both Operating Systems in a dual-boot configuration because I want to prevent any performance trade-offs due to hypervisors etc.
+
+*I initially tried with Ubuntu 19.10 but I failed to get that working so I tried again with 18.04 - not sure if that really makes the difference however.*
+
+### Computer CMOS setup and disk partitioning
 
 I started with wiping out the (256GB SSD) drive completely and configuring UEFI SecureBoot in the notebook CMOS setup. Then created a GPT Windows 10 bootable USB stick with Rufus and installed Windows 10 on a 125GB partition.
 Then created GPT Ubuntu 18.04 bootable USB stick with Rufus and installed Ubuntu on another 125GB partition.
@@ -14,7 +17,13 @@ Note that during Windows 10 installation 3 other system partitions were automati
 - /dev/sda4 125GB Basic Data (NTFS)
 - /dev/sda5 125GB Linux Filesystem (Ext4)
 
-For the installation of neo4j and BloodHound I have used the guidance as described in an earlier post from vestjoe https://gist.github.com/vestjoe/68b579d07f6a685b15d05f55908883cc, however I needed to insert a 'sudo su' (see below) as without that it was throwing 'permission denied' messages to me.
+### Credits go here
+
+For the installation of neo4j and BloodHound I have used the guidance as described in an earlier post from vestjoe https://gist.github.com/vestjoe/68b579d07f6a685b15d05f55908883cc, however I needed to insert a `sudo su` as without that it was throwing some 'permission denied' messages to me.
+
+Anyway, let's start installing...
+
+### Installing java and neo4j
 
 ```
 sudo apt-get install wget curl git
@@ -36,16 +45,21 @@ echo "dbms.connector.bolt.address=0.0.0.0:7687" >> /etc/neo4j/neo4j.conf
 echo "dbms.allow_format_migration=true" >> /etc/neo4j/neo4j.conf
 ```
 
+### Verify installation results
+
 The result of the above is that the following gets installed:
 Configurations in:
 /etc/java-8-openjdk/
 /etc/neo4j/neo4j.conf
 
 Binaries in:
+
 /usr/share/applications/ (java)
+
 /usr/share/neo4j/bin/
 
 Logfiles in:
+
 /var/lib/neo4j/ (relevant files are neo4j.log and debug.log)
 
 After installation, I verified installing the above components with:
@@ -60,6 +74,8 @@ $ neo4j version
 neo4j 3.5.14
 ```
 
+### Installing the BloodHound example database
+
 While still logged on as `su`, continue with adding the BloodHound example database:
 
 ```
@@ -72,8 +88,12 @@ neo4j start
 netstat -lantp
 ```
 
+### Testing neo4j and changing the initial password
+
 Then log in to neo4j via the web interface http://localhost:7474/browser/
 Initially both the username and password are neo4j, you must change the password (for example into BloodHound as long as you don't expose the database to the outside world)
+
+[picture neo4j here]
 
 The last step is to install the BloodHound binary application itself
 
@@ -86,5 +106,7 @@ Finally, you are able to launch the BloodHound application by selecting the dire
 ```
 
 Then in the logon screen enter the database url bolt://localhost:7687, the username neo4j and the password (BloodHound).
+
+[picture BloodHound here]
 
 Depending on your computer memory configuration you might want to make some additional adjustments in the /etc/neo4j/neo4j.conf file. Also take a look at the logfiles /var/lib/neo4j/neo4j.log and debug.log as these will likely give you additional hints on how to optimize the configuration.
