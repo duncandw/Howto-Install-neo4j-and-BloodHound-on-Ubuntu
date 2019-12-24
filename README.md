@@ -7,7 +7,7 @@ For the context, my system is a notebook with both Windows 10 and Ubuntu 18.04 i
 
 ### Computer CMOS setup and disk partitioning
 
-I started with wiping out the (256GB SSD) drive completely and configuring UEFI SecureBoot in the notebook CMOS setup. Then created a GPT Windows 10 bootable USB stick with Rufus and installed Windows 10 on a 125GB partition.
+I started with wiping out the (256GB SSD) drive completely and configuring UEFI SecureBoot in the notebook CMOS setup. Then created a GPT Windows 10 bootable USB stick with https://rufus.ie/ and installed Windows 10 on a 125GB partition.
 Then created GPT Ubuntu 18.04 bootable USB stick with Rufus and installed Ubuntu on another 125GB partition.
 
 Note that during Windows 10 installation 3 other system partitions were automatically created, here's an overview of the full disk partition layout after completing the installation:
@@ -49,18 +49,20 @@ echo "dbms.allow_format_migration=true" >> /etc/neo4j/neo4j.conf
 
 The result of the above is that the following gets installed:
 Configurations in:
+```
 /etc/java-8-openjdk/
 /etc/neo4j/neo4j.conf
-
+```
 Binaries in:
-
+```
 /usr/share/applications/ (java)
-
 /usr/share/neo4j/bin/
-
+```
 Logfiles in:
-
-/var/lib/neo4j/ (relevant files are neo4j.log and debug.log)
+```
+/var/lib/neo4j/
+``` 
+(relevant files are neo4j.log and debug.log)
 
 After installation, I verified installing the above components with:
 
