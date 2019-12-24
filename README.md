@@ -100,7 +100,7 @@ Initially both the username and password are neo4j, you must change the password
 The last step is to install the BloodHound binary application itself
 
 On https://github.com/BloodHoundAD/BloodHound/releases select the correct binary for your Ubuntu system; (BloodHound-linux-x64.zip). 
-Now you have to decided where you want to place the software, I have placed it (extracted the ZIP archive) into /opt/BloodHound-linux-x64.
+Now you have to decide where you want to place the software, I have placed it (extracted the ZIP archive) into /opt/BloodHound-linux-x64.
 
 Finally, you are able to launch the BloodHound application by selecting the directory containing the binaries and type
 ```
